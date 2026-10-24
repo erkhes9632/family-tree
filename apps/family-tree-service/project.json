@@ -1,0 +1,58 @@
+{
+  "name": "family-tree-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/family-tree-service/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "dev": {
+      "continuous": true,
+      "command": "wrangler dev --port 8787 --test-scheduled",
+      "options": { "cwd": "apps/family-tree-service" }
+    },
+    "build": {
+      "command": "wrangler deploy --dry-run --outdir ../../dist/apps/family-tree-service",
+      "options": { "cwd": "apps/family-tree-service" },
+      "outputs": ["{workspaceRoot}/dist/apps/family-tree-service"]
+    },
+    "typecheck": {
+      "command": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.spec.json",
+      "options": { "cwd": "apps/family-tree-service" }
+    },
+    "cf-typegen": {
+      "command": "wrangler types",
+      "options": { "cwd": "apps/family-tree-service" }
+    },
+    "db:generate": {
+      "command": "drizzle-kit generate",
+      "options": { "cwd": "apps/family-tree-service" }
+    },
+    "db:migrate": {
+      "command": "wrangler d1 migrations apply family-tree --local",
+      "options": { "cwd": "apps/family-tree-service" },
+      "configurations": {
+        "production": { "command": "wrangler d1 migrations apply family-tree --remote --env production" }
+      }
+    },
+    "db:seed": {
+      "command": "bun scripts/seed.ts && wrangler d1 execute family-tree --local --file .seed/seed.sql",
+      "options": { "cwd": "apps/family-tree-service" }
+    },
+    "db:seed-clans": {
+      "command": "bun scripts/seed.ts --clans && wrangler d1 execute family-tree --local --file .seed/clans.sql",
+      "options": { "cwd": "apps/family-tree-service" },
+      "configurations": {
+        "production": { "command": "bun scripts/seed.ts --clans && wrangler d1 execute family-tree --remote --env production --file .seed/clans.sql" }
+      }
+    },
+    "db:reset": {
+      "command": "rm -rf .wrangler/state/v3/d1 && wrangler d1 migrations apply family-tree --local && bun scripts/seed.ts && wrangler d1 execute family-tree --local --file .seed/seed.sql",
+      "options": { "cwd": "apps/family-tree-service" }
+    },
+    "deploy": {
+      "command": "wrangler deploy --env production",
+      "options": { "cwd": "apps/family-tree-service" },
+      "dependsOn": ["typecheck", "test"]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "family-tree-web",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/copy-elk-worker.mjs && next build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "node scripts/cf.mjs deploy",
+    "upload": "node scripts/cf.mjs upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+  }
+}

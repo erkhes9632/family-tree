@@ -1,0 +1,39 @@
+{
+  "name": "family-tree-web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/family-tree-web/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "build/dev/start are inferred by @nx/next; the ones below add Cloudflare + checks",
+  "targets": {
+    "copy-elk-worker": {
+      "command": "node scripts/copy-elk-worker.mjs",
+      "options": { "cwd": "apps/family-tree-web" },
+      "outputs": ["{projectRoot}/public/elk-worker.min.js"],
+      "cache": true
+    },
+    "dev": {
+      "dependsOn": ["copy-elk-worker"]
+    },
+    "build": {
+      "dependsOn": ["copy-elk-worker"]
+    },
+    "typecheck": {
+      "command": "tsc --noEmit -p tsconfig.json",
+      "options": { "cwd": "apps/family-tree-web" }
+    },
+    "preview": {
+      "command": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+      "options": { "cwd": "apps/family-tree-web" }
+    },
+    "cf-build": {
+      "command": "node scripts/cf.mjs build",
+      "options": { "cwd": "apps/family-tree-web" }
+    },
+    "deploy": {
+      "command": "node scripts/cf.mjs deploy",
+      "options": { "cwd": "apps/family-tree-web" },
+      "dependsOn": ["typecheck"]
+    }
+  }
+}

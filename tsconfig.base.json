@@ -1,0 +1,22 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2023", "dom", "dom.iterable"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": false,
+    "paths": {
+      "@super-project/types": ["./libs/shared/types/src/index.ts"],
+      "@super-project/genealogy": ["./libs/shared/genealogy/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "family-tree-service",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "upload_source_maps": true,
+
+  // ── Local development (default env) ───────────────────────────────
+  "vars": {
+    "AUTH_MODE": "dev",
+    "WEB_ORIGIN": "http://localhost:3000",
+    "API_ORIGIN": "http://localhost:8787",
+    "EMAIL_FROM": "Ургийн бичиг <noreply@example.com>",
+    "R2_BUCKET_NAME": "family-tree-media",
+    "DEFAULT_TIMEZONE": "Asia/Ulaanbaatar",
+    "REMINDER_LOCAL_HOUR": "8",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "family-tree",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "family-tree-media" }],
+  "ratelimits": [
+    {
+      "name": "INVITE_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 10, "period": 60 },
+    },
+    {
+      "name": "UPLOAD_LIMITER",
+      "namespace_id": "1002",
+      "simple": { "limit": 60, "period": 60 },
+    },
+  ],
+  // Hourly; each user is processed when it is REMINDER_LOCAL_HOUR in their own timezone.
+  "triggers": { "crons": ["0 * * * *"] },
+
+  // ── Production ────────────────────────────────────────────────────
+  // workers.dev URLs until a custom domain is connected (then add "routes" and update the origins).
+  "env": {
+    "production": {
+      "name": "family-tree-service",
+      "workers_dev": true,
+      "vars": {
+        "AUTH_MODE": "clerk",
+        "WEB_ORIGIN": "https://family-tree-web.erkhes-labs.workers.dev",
+        "API_ORIGIN": "https://family-tree-service.erkhes-labs.workers.dev",
+        // Resend's shared test sender until a domain is verified in Resend.
+        "EMAIL_FROM": "Ургийн бичиг <onboarding@resend.dev>",
+        "R2_BUCKET_NAME": "family-tree-media",
+        "DEFAULT_TIMEZONE": "Asia/Ulaanbaatar",
+        "REMINDER_LOCAL_HOUR": "8",
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "family-tree",
+          "database_id": "1a6d833c-4906-4858-8a42-b2aa480c1888",
+          "migrations_dir": "migrations",
+        },
+      ],
+      "r2_buckets": [
+        { "binding": "MEDIA", "bucket_name": "family-tree-media" },
+      ],
+      "ratelimits": [
+        {
+          "name": "INVITE_LIMITER",
+          "namespace_id": "1001",
+          "simple": { "limit": 10, "period": 60 },
+        },
+        {
+          "name": "UPLOAD_LIMITER",
+          "namespace_id": "1002",
+          "simple": { "limit": 60, "period": 60 },
+        },
+      ],
+      "triggers": { "crons": ["0 * * * *"] },
+      // "routes": [{ "pattern": "api.<your-domain>", "custom_domain": true }]
+    },
+  },
+}

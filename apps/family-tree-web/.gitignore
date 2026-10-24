@@ -1,0 +1,8 @@
+.open-next
+.wrangler
+.env.local
+.env*.local
+.env.production
+.dev.vars
+public/elk-worker.min.js
+tsconfig.tsbuildinfo

@@ -1,0 +1,22 @@
+# Copy to .dev.vars for `wrangler dev`. Never commit .dev.vars.
+# Clerk (only needed when AUTH_MODE=clerk)
+CLERK_SECRET_KEY=
+# PEM public key from Clerk dashboard → API keys → "JWT public key" (verifies without a network call)
+CLERK_JWT_KEY=
+# Clerk webhook signing secret (Svix) for /v1/webhooks/clerk
+CLERK_WEBHOOK_SECRET=
+# Resend
+RESEND_API_KEY=
+# Web Push VAPID keys (generate with `bunx web-push generate-vapid-keys` or any VAPID tool)
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=
+VAPID_SUBJECT=mailto:admin@example.mn
+# R2 S3 API credentials for direct browser → R2 presigned uploads.
+# PRODUCTION ONLY — keep them in the gitignored .prod-secrets file, not in .dev.vars. Locally (empty) uploads go
+# through signed Worker URLs into the local R2 binding; with keys, `wrangler dev` would presign to the real bucket
+# while the MEDIA binding stays local, and completing the upload fails.
+R2_ACCOUNT_ID=
+R2_ACCESS_KEY_ID=
+R2_SECRET_ACCESS_KEY=
+# HMAC secret for signed Worker blob URLs (any long random string)
+BLOB_SIGNING_SECRET=dev-only-change-me

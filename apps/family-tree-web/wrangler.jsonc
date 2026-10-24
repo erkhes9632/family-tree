@@ -1,0 +1,15 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "family-tree-web",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // https://family-tree-web.erkhes-labs.workers.dev until a custom domain is connected.
+  "workers_dev": true,
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "family-tree-web" }],
+  // Next.js incremental cache (create with: wrangler r2 bucket create family-tree-web-cache)
+  "r2_buckets": [{ "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "family-tree-web-cache" }],
+  "observability": { "enabled": true }
+  // "routes": [{ "pattern": "example.mn", "custom_domain": true }, { "pattern": "www.example.mn", "custom_domain": true }]
+}

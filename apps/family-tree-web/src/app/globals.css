@@ -1,0 +1,195 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@xyflow/react/dist/style.css';
+
+@source '../../content';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.7rem;
+  /* warm parchment + Mongolian red / blue, gold accent */
+  --background: oklch(0.984 0.008 85);
+  --foreground: oklch(0.23 0.02 45);
+  --card: oklch(0.995 0.004 85);
+  --card-foreground: oklch(0.23 0.02 45);
+  --popover: oklch(0.995 0.004 85);
+  --popover-foreground: oklch(0.23 0.02 45);
+  --primary: oklch(0.47 0.16 29);
+  --primary-foreground: oklch(0.985 0.01 85);
+  --secondary: oklch(0.94 0.02 80);
+  --secondary-foreground: oklch(0.3 0.04 45);
+  --muted: oklch(0.95 0.013 80);
+  --muted-foreground: oklch(0.47 0.025 50);
+  --accent: oklch(0.93 0.045 85);
+  --accent-foreground: oklch(0.3 0.05 50);
+  --destructive: oklch(0.55 0.2 27);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.89 0.018 75);
+  --input: oklch(0.87 0.02 75);
+  --ring: oklch(0.47 0.16 29);
+  --blue: oklch(0.42 0.13 255);
+  --gold: oklch(0.78 0.13 80);
+  --node-male: oklch(0.95 0.03 250);
+  --node-female: oklch(0.95 0.035 15);
+  --node-other: oklch(0.95 0.02 140);
+  --node-deceased: oklch(0.93 0.008 70);
+  --canvas: oklch(0.97 0.01 85);
+}
+
+.dark {
+  --background: oklch(0.17 0.012 50);
+  --foreground: oklch(0.93 0.012 80);
+  --card: oklch(0.21 0.014 50);
+  --card-foreground: oklch(0.93 0.012 80);
+  --popover: oklch(0.21 0.014 50);
+  --popover-foreground: oklch(0.93 0.012 80);
+  --primary: oklch(0.7 0.15 32);
+  --primary-foreground: oklch(0.17 0.02 40);
+  --secondary: oklch(0.27 0.015 55);
+  --secondary-foreground: oklch(0.92 0.015 80);
+  --muted: oklch(0.25 0.012 55);
+  --muted-foreground: oklch(0.72 0.02 75);
+  --accent: oklch(0.3 0.035 70);
+  --accent-foreground: oklch(0.93 0.02 80);
+  --destructive: oklch(0.65 0.19 25);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.32 0.015 55);
+  --input: oklch(0.36 0.015 55);
+  --ring: oklch(0.7 0.15 32);
+  --blue: oklch(0.72 0.11 250);
+  --gold: oklch(0.8 0.12 80);
+  --node-male: oklch(0.28 0.04 250);
+  --node-female: oklch(0.29 0.045 20);
+  --node-other: oklch(0.28 0.03 140);
+  --node-deceased: oklch(0.25 0.008 60);
+  --canvas: oklch(0.19 0.012 50);
+}
+
+@theme inline {
+  --font-sans: var(--font-noto-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-noto-serif), ui-serif, Georgia, serif;
+  --font-mongol: var(--font-noto-mongolian), 'Mongolian Baiti', serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-blue: var(--blue);
+  --color-gold: var(--gold);
+  --color-node-male: var(--node-male);
+  --color-node-female: var(--node-female);
+  --color-node-other: var(--node-other);
+  --color-node-deceased: var(--node-deceased);
+  --color-canvas: var(--canvas);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif tracking-tight;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+}
+
+/* Traditional Mongolian script is written top-to-bottom, left-to-right. */
+.mongol-script {
+  writing-mode: vertical-lr;
+  text-orientation: sideways;
+  font-family: var(--font-mongol);
+}
+
+/* Long-form culture content (MDX) */
+.prose-content {
+  @apply max-w-none text-[1.02rem] leading-7;
+}
+.prose-content h2 {
+  @apply mt-10 mb-3 text-2xl font-semibold;
+}
+.prose-content h3 {
+  @apply mt-7 mb-2 text-lg font-semibold;
+}
+.prose-content p {
+  @apply my-4;
+}
+.prose-content ul {
+  @apply my-4 list-disc pl-6 space-y-1.5;
+}
+.prose-content ol {
+  @apply my-4 list-decimal pl-6 space-y-1.5;
+}
+.prose-content a {
+  @apply text-primary underline underline-offset-4;
+}
+.prose-content blockquote {
+  @apply my-6 border-l-4 border-gold bg-accent/40 py-2 pl-4 pr-3 italic rounded-r-md;
+}
+.prose-content table {
+  @apply my-6 w-full border-collapse text-sm;
+}
+.prose-content th {
+  @apply border-b border-border bg-muted px-3 py-2 text-left font-semibold;
+}
+.prose-content td {
+  @apply border-b border-border px-3 py-2 align-top;
+}
+.prose-content strong {
+  @apply font-semibold text-foreground;
+}
+
+/* React Flow theming */
+.react-flow {
+  --xy-background-color: var(--canvas);
+  --xy-edge-stroke: color-mix(in oklch, var(--foreground) 35%, transparent);
+  --xy-edge-stroke-selected: var(--primary);
+  --xy-minimap-background-color: var(--card);
+  --xy-minimap-mask-background-color: color-mix(in oklch, var(--background) 55%, transparent);
+  --xy-minimap-node-stroke-color-default: transparent;
+  --xy-controls-button-background-color: var(--card);
+  --xy-controls-button-background-color-hover: var(--muted);
+  --xy-controls-button-color: var(--foreground);
+  --xy-controls-button-border-color: var(--border);
+  --xy-attribution-background-color: transparent;
+}
+.react-flow__node.selectable:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

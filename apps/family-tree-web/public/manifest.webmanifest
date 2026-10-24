@@ -1,0 +1,9 @@
+{
+  "name": "Ургийн бичиг · Family Tree",
+  "short_name": "Ургийн бичиг",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#faf7f0",
+  "theme_color": "#9b2c22",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["./worker-configuration.d.ts", "node"],
+    "lib": ["es2023"],
+    "noEmit": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*.ts", "scripts/**/*.ts", "worker-configuration.d.ts", "drizzle.config.ts"],
+  "exclude": ["src/**/*.spec.ts"]
+}
